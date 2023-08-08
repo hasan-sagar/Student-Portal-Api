@@ -38,3 +38,24 @@ model otp {
   otp_code   String?
   email      String?  @unique
 }
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model course_details {
+  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at       DateTime          @default(now()) @db.Timestamptz(6)
+  course_title     String?
+  credit           Int?              @db.SmallInt
+  semester_id      String?           @db.Uuid
+  course_code      Int?              @unique @db.SmallInt
+  semester_details semester_details? @relation(fields: [semester_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model semester_details {
+  id             String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at     DateTime         @default(now()) @db.Timestamptz(6)
+  semester_name  String?          @unique
+  course_details course_details[]
+}
