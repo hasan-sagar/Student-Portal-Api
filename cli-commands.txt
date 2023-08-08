@@ -1,0 +1,7 @@
+//After clone from github
+    - npm install
+    - npm run start:dev
+
+//To fetch databases table
+    - npx prisma db pull
+    - npx prisma generate
