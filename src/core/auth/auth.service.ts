@@ -197,7 +197,7 @@ export class AuthService {
       }
     } catch (error) {
       throw new HttpException(
-        'Account Exist or Server Problem',
+        'Register First or Server Problem',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -241,14 +241,23 @@ export class AuthService {
     }
   }
 
-  async GetAllUsers(userId:string):Promise<any>{
-    return this.prisma.users.findFirst({
+  async GetLoggedInUser(userId:string){
+    try {
+      return await this.prisma.users.findFirst({
         where:{
-            id:userId
+          id:userId
         },
         include:{
-            account_details:true
+          account_details:true,
         }
-    })
+      })
+      
+    } catch (error) {
+      console.log();
+      throw new HttpException(
+        'Not Found',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 }
