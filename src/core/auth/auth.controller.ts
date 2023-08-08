@@ -2,6 +2,8 @@ import { Controller, Param, Get, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from '../jwt-roles/jwt-auth.guard';
 import { User } from 'src/common/decorators/user.decorator';
+import { RoleGuard } from '../jwt-roles/roles.guard';
+import { Roles } from '../jwt-roles/roles.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -34,9 +36,10 @@ export class AuthController {
     return this.authService.UserLoginOtpVerify(to, otp)
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('getAllUsers')
+  @Roles('user')
+  @UseGuards(JwtAuthGuard,RoleGuard)
+  @Get('current-user')
   async GetAllUsers(@User() user:any){
-    return this.authService.GetAllUsers(user.userId)
+    return this.authService.GetLoggedInUser(user.userId)
   }
 }
