@@ -241,23 +241,19 @@ export class AuthService {
     }
   }
 
-  async GetLoggedInUser(userId:string){
+  async GetLoggedInUser(userId: string) {
     try {
       return await this.prisma.users.findFirst({
-        where:{
-          id:userId
+        where: {
+          id: userId,
         },
-        include:{
-          account_details:true,
-        }
-      })
-      
+        include: {
+          account_details: true,
+        },
+      });
     } catch (error) {
       console.log();
-      throw new HttpException(
-        'Not Found',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Not Found', HttpStatus.BAD_REQUEST);
     }
   }
 }
