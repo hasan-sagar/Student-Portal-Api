@@ -125,6 +125,7 @@ export class AuthService {
             status: HttpStatus.CREATED,
             access_token: access_token,
             userId: userId,
+            type: type,
           };
         } else {
           return false;
@@ -134,10 +135,7 @@ export class AuthService {
       }
     } catch (error) {
       console.log(error);
-      throw new HttpException(
-        'Account Exist Please Login',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new HttpException('Enter Otp Corectly', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -235,6 +233,7 @@ export class AuthService {
         status: HttpStatus.OK,
         access_token: access_token,
         userId: userId,
+        type: type,
       };
     } else {
       throw new NotFoundException();
