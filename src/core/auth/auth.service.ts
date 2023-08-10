@@ -31,7 +31,7 @@ export class AuthService {
         },
       });
       if (checkIfUserAccountExist) {
-        return { message: 'Already registered . Please Login' };
+        throw new HttpException('User Exist', HttpStatus.BAD_REQUEST);
       } else if (!checkIfUserAccountExist && !checkIfOtpExist) {
         await this.prisma.otp.create({
           data: {
