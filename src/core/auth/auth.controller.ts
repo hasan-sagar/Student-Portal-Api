@@ -32,14 +32,17 @@ export class AuthController {
   }
 
   @Get('login/verify-otp/:to/:otp')
-  async UserLoginOtpVerify(@Param('to') to: string, @Param('otp') otp: string): Promise<any> {
-    return this.authService.UserLoginOtpVerify(to, otp)
+  async UserLoginOtpVerify(
+    @Param('to') to: string,
+    @Param('otp') otp: string,
+  ): Promise<any> {
+    return this.authService.UserLoginOtpVerify(to, otp);
   }
 
-  @Roles('user')
-  @UseGuards(JwtAuthGuard,RoleGuard)
+  @Roles('admin', 'user')
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Get('current-user')
-  async GetAllUsers(@User() user:any){
-    return this.authService.GetLoggedInUser(user.userId)
+  async GetAllUsers(@User() user: any) {
+    return this.authService.GetLoggedInUser(user.userId);
   }
 }
