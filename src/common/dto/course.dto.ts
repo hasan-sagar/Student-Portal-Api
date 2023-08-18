@@ -1,6 +1,6 @@
 export class CourseDetailsDto {
-  id: any;
-  course_code: string;
-  course_title: string;
-  credit: number;
+  id: string;
+  course_code?: number;
+  course_title?: string;
+  credit?: number;
 }
